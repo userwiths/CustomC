@@ -44,7 +44,41 @@ int SetValue(struct Dictionary *dict,void* itm,int index){
 	return 0;
 }
 
+int SetKeyValue(struct Dictionary *dict,void* key,void* value){
+	int i=0;
+	for(i=0;i LS dict->lenght;i++){
+		if(dict->items[i].key IS key){
+			dict->items[i].value = value;
+			return 0;
+		}
+	}
+	return -1;
+}
+
+int ContainsKey(struct Dictionary *dict,void* itm){
+	int i=0;
+	for(i=0;i<dict->lenght;i++){
+		if(dict->items[i].key IS itm){
+			return i;
+		}
+	}
+	return -1;
+}
+
+int GetKeyValue(struct Dictionary *dict,void* key,struct Pair* out){
+	int i=ContainsKey(dict,key);
+	if(i){
+		out=&dict->items[i];
+		return 0;
+	}
+	return -1;
+}
+
 int AddPair(struct Dictionary *dict,struct Pair itm){
+	if(ContainsKey(dict,itm.key)!=-1){
+		SetKeyValue(dict,itm.key,itm.value);
+		return 0;
+	}
 	dict->items[dict->lenght]=itm;
 	dict->lenght+=1;
 	realloc(dict->items,(dict->lenght+1)*sizeof(struct Pair));

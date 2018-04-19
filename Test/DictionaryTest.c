@@ -1,5 +1,5 @@
 
-#include "dictionary.h"
+#include "../dictionary.h"
 
 int main(){
 	struct Dictionary dict=Dictionary();
